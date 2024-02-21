@@ -33,9 +33,13 @@ string loopString(int num_count, string star_string){
         string sum_loop = star_string;
         string add_star = "*";
         string no_value = ""; //cannot put '' since its for char
-        if(num_count > 1){
+        if(num_count > 1 ){
             for(int x = 2; x <= num_count-1; x++){ //count 1,3,5,7,...
                 sum_loop += add_star;
+                if(sum_loop == "*"){
+                    return no_value;
+                }
+                //for()
             }
             return sum_loop;
         }
@@ -43,14 +47,19 @@ string loopString(int num_count, string star_string){
     }
 
 void drawPyramid(int star){
-    int count = 1;
     string star_string = "*"; //initial
-    string star_store;
-
+    int count2 = 1; //what is this for?
+    //bool single_star = false;
+    string star_store1; //1st for loop
+    string star_store2; //2nd for loop
+    for(int x = star; x >= 0; x--){
+        star_store1 += star_string + loopString(star, star_string);
+        cout << star_store1 << endl;
+    }
     for(int x = 0; x < star; x++){
-        star_store += star_string + loopString(count, star_string);
-        count++;
-        cout << star_store << endl;
+        star_store2 += star_string + loopString(count2, star_string);
+        count2++;
+        cout << star_store2 << endl;
     }
 }
 
