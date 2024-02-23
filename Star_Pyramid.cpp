@@ -1,79 +1,83 @@
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 /*
-            *
-        *   *   *
-    *   *   *   *   *
-*   *   *   *   *   *   *
-  
+
+        *
+    *   *   *
+*   *   *   *   *
+
 */
 
-class Pyramid{
-    private:
-    int num;
-    
-    public:
-    Pyramid(int x): num(x)  {} //Constructor if private member is presence. The ':' 
-                                //is the initializer, 'num' is private and it is declared by 'x'. 
-                                //see it as num = x
-    
-    void setNum(int x){ //get
-        num = x;
-    }
-    
-    int getNum(){ //set go
-        return num;
-    }
-};
 
-
-string loopString(int num_count, string star_string){
-        string sum_loop = star_string;
-        string add_star = "*";
-        string no_value = ""; //cannot put '' since its for char
-        if(num_count > 1 ){
-            for(int x = 2; x <= num_count-1; x++){ //count 1,3,5,7,...
-                sum_loop += add_star;
-                if(sum_loop == "*"){
-                    return no_value;
-                }
-                //for()
-            }
-            return sum_loop;
-        }
-        return no_value;
+string firstRow(int row){  //for 1st row
+    string add_star = "*", add_space = " ", combine;
+    for(int x = 0; x < row-1; x++){ //add space before "*". row-1 because want only 4 whitspace
+        combine += add_space;
     }
-
-void drawPyramid(int star){
-    string star_string = "*"; //initial
-    int count2 = 1; //what is this for?
-    //bool single_star = false;
-    string star_store1; //1st for loop
-    string star_store2; //2nd for loop
-    for(int x = star; x >= 0; x--){
-        star_store1 += star_string + loopString(star, star_string);
-        cout << star_store1 << endl;
+    combine += add_star;
+    for(int x = 0; x < row-1 ; x++){ //add space after "*"
+        combine += add_space;
     }
-    for(int x = 0; x < star; x++){
-        star_store2 += star_string + loopString(count2, star_string);
-        count2++;
-        cout << star_store2 << endl;
-    }
+    return combine;  //it looks like this: (row - 1) + "*" + (row - 1). Only for 1st row
 }
+
+string secondRow(int row, int count){ //for 2nd to second last row
+    string add_star = "*", add_space = " ", combine;
+    int count_whitespace = row - count;
+    int count_star = row - count;
+    
+    for(int x = 0; x < count_whitespace; x++){ //add whitspace
+        combine += add_space;
+    }
+    
+    for(int y = 0; y < count_star; y++){ //add star
+        combine += add_star;    
+    }
+    
+    for(int z = 0; z < count_whitespace; z++){ //add whitespace
+        combine += add_space;
+    }
+    return combine;
+}
+
+string lastRow(int row){ //for last row
+    int row_multiply = row*2;
+    string add_star = "*", combine;
+    for(int x = 0; x < row_multiply; x++){
+        combine += add_star;
+    }
+    return combine;
+}
+
 
 int main()
 {
-    while(true){
-        int stars;
-        cout << "Please enter how many row of stars you want: " << endl;
-        cin >> stars;
-        cout << "The result\n\n";
-        Pyramid Star(stars);
-        drawPyramid(Star.getNum());
+    int rows, count = 1; //initialization count
+    string  string_sum1, string_sum2, string_sum3;
+    cout << "Enter the number of rows you want the pyramid to be.\n";
+    cin >> rows;
+    
+    for(int x = 0; x < rows; x++){
+        if(count == 1){              //for uppermost row
+            string_sum1 = firstRow(rows);
+            cout << string_sum1 << endl;
+            count++;
+        }
+        else if(count > 1 && count < rows){ //for 2nd to second last row
+            string_sum2 = secondRow(rows, count); 
+            cout << string_sum2 << endl;
+            count++;
+        }
+        
+        else if(count == rows){  //for last row
+        string_sum3 = lastRow(rows);
+        cout << string_sum3 << endl;
+        }
     }
     return 0;
+    
+
 }
-
-
