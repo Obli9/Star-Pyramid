@@ -24,10 +24,10 @@ string firstRow(int row){  //for 1st row
     return combine;  //it looks like this: (row - 1) + "*" + (row - 1). Only for 1st row
 }
 
-string secondRow(int row, int count){ //for 2nd to second last row
+string secondRow(int row, int count, int count_2nd){ //for 2nd to second last row
     string add_star = "*", add_space = " ", combine;
     int count_whitespace = row - count;
-    int count_star = row - count;
+    int count_star = count + count_2nd;  // Add count with initalizer count_2nd to make the result as this: 3,5,7,9,....
     
     for(int x = 0; x < count_whitespace; x++){ //add whitspace
         combine += add_space;
@@ -55,7 +55,7 @@ string lastRow(int row){ //for last row
 
 int main()
 {
-    int rows, count = 1; //initialization count
+    int rows, count = 1, count_2nd = 1; //initialization count
     string  string_sum1, string_sum2, string_sum3;
     cout << "Enter the number of rows you want the pyramid to be.\n";
     cin >> rows;
@@ -67,9 +67,10 @@ int main()
             count++;
         }
         else if(count > 1 && count < rows){ //for 2nd to second last row
-            string_sum2 = secondRow(rows, count); 
+            string_sum2 = secondRow(rows, count, count_2nd); 
             cout << string_sum2 << endl;
             count++;
+            count_2nd++;
         }
         
         else if(count == rows){  //for last row
